@@ -1,0 +1,935 @@
+        .theme-toggle {
+            margin: 0 15px;
+        }
+        
+        .theme-toggle-btn {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 18px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .theme-toggle-btn:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        [data-theme="dark"] .theme-toggle-btn:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        [data-theme="dark"] .theme-toggle-btn i.fa-moon {
+            display: none;
+        }
+        
+        [data-theme="dark"] .theme-toggle-btn i.fa-sun {
+            display: inline-block;
+        }
+        
+        .theme-toggle-btn i.fa-sun {
+            display: none;
+        }<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LivestockLink - Connecting Sellers and Buyers, Fairly and Directly</title>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --secondary: #f57c00;
+            --dark: #263238;
+            --light: #f5f7fa;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            
+            /* Light Mode (Default) */
+            --bg-main: #f5f7fa;
+            --bg-card: #ffffff;
+            --text-main: #263238;
+            --text-secondary: #667788;
+            --border-color: #eee;
+            --shadow-color: rgba(0,0,0,0.05);
+            --header-bg: #ffffff;
+        }
+        
+        [data-theme="dark"] {
+            --bg-main: #121212;
+            --bg-card: #1e1e1e;
+            --text-main: #f5f7fa;
+            --text-secondary: #b0b0b0;
+            --border-color: #333;
+            --shadow-color: rgba(0,0,0,0.2);
+            --header-bg: #1a1a1a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 5px var(--shadow-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background-color 0.3s ease;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .lang-selector {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+            font-weight: 500;
+        }
+        
+        .lang-selector select {
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-left: 10px;
+            outline: none;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #1b5e20;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e65100;
+        }
+        
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(245,247,250,0.9) 100%), url('/api/placeholder/1200/400') center/cover;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+        
+        [data-theme="dark"] .hero {
+            background: linear-gradient(135deg, rgba(30,30,30,0.9) 0%, rgba(20,20,20,0.9) 100%), url('/api/placeholder/1200/400') center/cover;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: #445566;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .features {
+            padding: 80px 0;
+            background-color: var(--bg-card);
+            transition: background-color 0.3s ease;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            background-color: var(--bg-main);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .feature-img {
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 18px;
+        }
+        
+        .feature-content {
+            padding: 25px;
+        }
+        
+        .feature-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .feature-content p {
+            color: #667788;
+            margin-bottom: 15px;
+        }
+        
+        .how-it-works {
+            padding: 80px 0;
+            background-color: var(--light);
+        }
+        
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .step {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .step h3 {
+            margin-top: 10px;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .testimonials {
+            padding: 80px 0;
+            background-color: var(--bg-card);
+            transition: background-color 0.3s ease;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .testimonial-card {
+            background-color: var(--bg-main);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+        }
+        
+        .author-info h4 {
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .author-info p {
+            color: #667788;
+            font-size: 0.9rem;
+        }
+        
+        .marketplace {
+            padding: 80px 0;
+            background-color: var(--light);
+        }
+        
+        .marketplace-filter {
+            background-color: var(--bg-card);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            margin-bottom: 30px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .filter-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+        
+        .filter-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+        }
+        
+        .marketplace-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .marketplace-item {
+            background-color: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+        }
+        
+        .marketplace-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .item-img {
+            height: 200px;
+            background-color: #ddd;
+            position: relative;
+        }
+        
+        .item-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--success);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .item-content {
+            padding: 20px;
+        }
+        
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .item-price {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .item-details {
+            margin-bottom: 15px;
+            color: #667788;
+        }
+        
+        .item-location {
+            display: flex;
+            align-items: center;
+            color: #667788;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .item-location i {
+            margin-right: 5px;
+            color: var(--gray);
+        }
+        
+        .item-seller {
+            display: flex;
+            align-items: center;
+            color: #667788;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .seller-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #eee;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 12px;
+        }
+        
+        .verified-badge {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+        
+        .cta {
+            padding: 80px 0;
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .cta .btn {
+            background-color: white;
+            color: var(--primary);
+            font-size: 1.1rem;
+            padding: 12px 30px;
+        }
+        
+        .cta .btn:hover {
+            background-color: var(--light);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .footer-column p, .footer-column a {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .feature-grid, .testimonial-grid, .marketplace-items {
+                grid-template-columns: 1fr;
+            }
+            
+            .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .step {
+                max-width: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">Livestock<span>Link</span></a>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#marketplace">Marketplace</a>
+                    <a href="#testimonials">Success Stories</a>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <div class="lang-selector">
+                        <span>Language:</span>
+                        <select>
+                            <option value="en">English</option>
+                            <option value="ha">Hausa</option>
+                        </select>
+                    </div>
+                    <div class="theme-toggle">
+                        <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                    <a href="login.html" class="btn">Sign In</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Connecting Livestock Sellers and Buyers, Fairly and Directly</h1>
+            <p>LivestockLink empowers youth, novice traders, and local farmers by removing exploitative middlemen and giving everyone a fair chance to succeed in the livestock market.</p>
+            <div class="hero-btns">
+                <a href="seller-dashboard.html" class="btn">List Your Livestock</a>
+                <a href="buyer-dashboard.html" class="btn btn-secondary">Find Livestock</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why LivestockLink Matters</h2>
+                <p>Our platform provides a transparent, accessible marketplace for livestock trading across Yobe State and northern Nigeria.</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <img src="/api/placeholder/400/200" alt="Direct Connection">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Direct Connection</h3>
+                        <p>Connect directly with buyers or sellers without going through expensive middlemen who take large commissions.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <img src="/api/placeholder/400/200" alt="Fair Pricing">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Fair Pricing</h3>
+                        <p>See market trends and set fair prices that work for both parties, with complete transparency.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <img src="/api/placeholder/400/200" alt="Youth Empowerment">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Youth Empowerment</h3>
+                        <p>Create opportunities for young people to enter the livestock trade without needing insider connections.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>How LivestockLink Works</h2>
+                <p>A simple process that connects livestock buyers and sellers directly, cutting out exploitative middlemen.</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Create a Free Account</h3>
+                    <p>Sign up as a buyer or seller with basic verification for trust and security.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>List Your Livestock</h3>
+                    <p>Add photos, details, location, and price for your cows, goats, sheep, or other livestock.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Connect Directly</h3>
+                    <p>Communicate with potential buyers or sellers through in-app messaging or WhatsApp.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Complete Fair Trades</h3>
+                    <p>Meet securely, inspect the livestock, and complete the transaction without middleman fees.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="marketplace" id="marketplace">
+        <div class="container">
+            <div class="section-title">
+                <h2>Explore the Marketplace</h2>
+                <p>Browse available livestock listings from verified sellers across northern Nigeria.</p>
+            </div>
+            
+            <div class="marketplace-filter">
+                <h3 class="filter-title">Find the Perfect Livestock</h3>
+                <div class="filter-form">
+                    <div class="form-group">
+                        <label class="form-label">Animal Type</label>
+                        <select class="form-control">
+                            <option value="all">All Types</option>
+                            <option value="cow">Cattle</option>
+                            <option value="goat">Goats</option>
+                            <option value="sheep">Sheep</option>
+                            <option value="camel">Camels</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <select class="form-control">
+                            <option value="all">All Locations</option>
+                            <option value="potiskum">Potiskum</option>
+                            <option value="damaturu">Damaturu</option>
+                            <option value="nguru">Nguru</option>
+                            <option value="geidam">Geidam</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Price Range</label>
+                        <select class="form-control">
+                            <option value="all">All Prices</option>
+                            <option value="low">Below ₦50,000</option>
+                            <option value="mid">₦50,000 - ₦200,000</option>
+                            <option value="high">Above ₦200,000</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">&nbsp;</label>
+                        <button class="btn form-control">Search</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="marketplace-items">
+                <div class="marketplace-item">
+                    <div class="item-img">
+                        <img src="/api/placeholder/400/200" alt="Cow">
+                        <div class="item-badge">Health Verified</div>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-title">White Sokoto Bull</h3>
+                            <div class="item-price">₦180,000</div>
+                        </div>
+                        <p class="item-details">3-year-old healthy bull, well-fed and ready for sale. Perfect for Sallah celebration or breeding.</p>
+                        <div class="item-location">
+                            <i class="fas fa-map-marker-alt"></i> Potiskum Market, Yobe State
+                        </div>
+                        <div class="item-seller">
+                            <div class="seller-img">AM</div>
+                            <span>Adamu Mohammed</span>
+                            <span class="verified-badge">Verified</span>
+                        </div>
+                        <a href="#" class="btn btn-secondary" style="width: 100%; text-align: center;">Contact Seller</a>
+                    </div>
+                </div>
+                
+                <div class="marketplace-item">
+                    <div class="item-img">
+                        <img src="/api/placeholder/400/200" alt="Goats">
+                    </div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-title">Red Sokoto Goats (5)</h3>
+                            <div class="item-price">₦45,000 each</div>
+                        </div>
+                        <p class="item-details">Group of 5 healthy female goats, all between 1-2 years old. Can be sold individually or as a group.</p>
+                        <div class="item-location">
+                            <i class="fas fa-map-marker-alt"></i> Damaturu, Yobe State
+                        </div>
+                        <div class="item-seller">
+                            <div class="seller-img">FB</div>
+                            <span>Fatima Bello</span>
+                            <span class="verified-badge">Verified</span>
+                        </div>
+                        <a href="#" class="btn btn-secondary" style="width: 100%; text-align: center;">Contact Seller</a>
+                    </div>
+                </div>
+                
+                <div class="marketplace-item">
+                    <div class="item-img">
+                        <img src="/api/placeholder/400/200" alt="Sheep">
+                        <div class="item-badge">Health Verified</div>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-title">Balami Rams (3)</h3>
+                            <div class="item-price">₦75,000 each</div>
+                        </div>
+                        <p class="item-details">Premium quality Balami rams for Sallah or breeding. Well-fed and healthy with all vaccinations.</p>
+                        <div class="item-location">
+                            <i class="fas fa-map-marker-alt"></i> Nguru, Yobe State
+                        </div>
+                        <div class="item-seller">
+                            <div class="seller-img">IU</div>
+                            <span>Ibrahim Usman</span>
+                            <span class="verified-badge">Verified</span>
+                        </div>
+                        <a href="#" class="btn btn-secondary" style="width: 100%; text-align: center;">Contact Seller</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="marketplace.html" class="btn">View All Listings</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Success Stories</h2>
+                <p>Hear from farmers, youth, and buyers who have transformed their livestock trading experience with LivestockLink.</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"As a young farmer starting out, I was always at the mercy of middlemen who would take huge cuts of my profit. With LivestockLink, I now sell directly to buyers and earn 25% more for each animal. This platform has changed my life."</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">YM</div>
+                        <div class="author-info">
+                            <h4>Yakubu Musa</h4>
+                            <p>Young Farmer, Potiskum</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"I used to spend days traveling between markets looking for quality cattle at fair prices. Now I can browse listings from across the region, compare prices, and contact sellers directly. I recently purchased 10 cows without paying any commission fees."</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">AI</div>
+                        <div class="author-info">
+                            <h4>Amina Ibrahim</h4>
+                            <p>Restaurant Owner, Damaturu</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"As a respected dillali who believes in fair trade, I've joined LivestockLink as a verified agent. I now offer my expertise to new sellers while charging transparent, reasonable fees. This platform is transforming our industry for the better."</p>
+                    <div class="testimonial-author">
+                        <div class="author-img">MM</div>
+                        <div class="author-info">
+                            <h4>Musa Mohammed</h4>
+                            <p>Ethical Livestock Agent, Nguru</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Transform Livestock Trading?</h2>
+            <p>Join thousands of farmers, youth, and buyers creating a fair and transparent marketplace across northern Nigeria.</p>
+            <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px;">
+                <a href="seller-dashboard.html" class="btn">Sign Up as Seller</a>
+                <a href="buyer-dashboard.html" class="btn">Sign Up as Buyer</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>LivestockLink</h3>
+                    <p>A digital marketplace designed for the direct, transparent, and fair trading of livestock and related commodities.</p>
+                    <p>Empowering youth, novice traders, and local farmers across northern Nigeria.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <a href="#features">Features</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#marketplace">Marketplace</a>
+                    <a href="#testimonials">Success Stories</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <a href="#">Safety Guidelines</a>
+                    <a href="#">Pricing Guide</a>
+                    <a href
