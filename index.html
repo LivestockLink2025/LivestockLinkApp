@@ -1,3 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LivestockLink - Connecting Sellers and Buyers, Fairly and Directly</title>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --secondary: #f57c00;
+            --dark: #263238;
+            --light: #f5f7fa;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            
+            /* Light Mode (Default) */
+            --bg-main: #f5f7fa;
+            --bg-card: #ffffff;
+            --text-main: #263238;
+            --text-secondary: #667788;
+            --border-color: #eee;
+            --shadow-color: rgba(0,0,0,0.05);
+            --header-bg: #ffffff;
+        }
+        
+        [data-theme="dark"] {
+            --bg-main: #121212;
+            --bg-card: #1e1e1e;
+            --text-main: #f5f7fa;
+            --text-secondary: #b0b0b0;
+            --border-color: #333;
+            --shadow-color: rgba(0,0,0,0.2);
+            --header-bg: #1a1a1a;
+        }
+        
         .theme-toggle {
             margin: 0 15px;
         }
@@ -35,40 +71,6 @@
         
         .theme-toggle-btn i.fa-sun {
             display: none;
-        }<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LivestockLink - Connecting Sellers and Buyers, Fairly and Directly</title>
-    <style>
-        :root {
-            --primary: #2e7d32;
-            --secondary: #f57c00;
-            --dark: #263238;
-            --light: #f5f7fa;
-            --success: #28a745;
-            --danger: #dc3545;
-            --warning: #ffc107;
-            
-            /* Light Mode (Default) */
-            --bg-main: #f5f7fa;
-            --bg-card: #ffffff;
-            --text-main: #263238;
-            --text-secondary: #667788;
-            --border-color: #eee;
-            --shadow-color: rgba(0,0,0,0.05);
-            --header-bg: #ffffff;
-        }
-        
-        [data-theme="dark"] {
-            --bg-main: #121212;
-            --bg-card: #1e1e1e;
-            --text-main: #f5f7fa;
-            --text-secondary: #b0b0b0;
-            --border-color: #333;
-            --shadow-color: rgba(0,0,0,0.2);
-            --header-bg: #1a1a1a;
         }
         
         * {
@@ -651,6 +653,7 @@
                     <div class="theme-toggle">
                         <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle dark mode">
                             <i class="fas fa-moon"></i>
+                            <i class="fas fa-sun"></i>
                         </button>
                     </div>
                     <a href="login.html" class="btn">Sign In</a>
@@ -835,101 +838,4 @@
                     <div class="item-img">
                         <img src="/api/placeholder/400/200" alt="Sheep">
                         <div class="item-badge">Health Verified</div>
-                    </div>
-                    <div class="item-content">
-                        <div class="item-header">
-                            <h3 class="item-title">Balami Rams (3)</h3>
-                            <div class="item-price">₦75,000 each</div>
-                        </div>
-                        <p class="item-details">Premium quality Balami rams for Sallah or breeding. Well-fed and healthy with all vaccinations.</p>
-                        <div class="item-location">
-                            <i class="fas fa-map-marker-alt"></i> Nguru, Yobe State
-                        </div>
-                        <div class="item-seller">
-                            <div class="seller-img">IU</div>
-                            <span>Ibrahim Usman</span>
-                            <span class="verified-badge">Verified</span>
-                        </div>
-                        <a href="#" class="btn btn-secondary" style="width: 100%; text-align: center;">Contact Seller</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="marketplace.html" class="btn">View All Listings</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>Success Stories</h2>
-                <p>Hear from farmers, youth, and buyers who have transformed their livestock trading experience with LivestockLink.</p>
-            </div>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"As a young farmer starting out, I was always at the mercy of middlemen who would take huge cuts of my profit. With LivestockLink, I now sell directly to buyers and earn 25% more for each animal. This platform has changed my life."</p>
-                    <div class="testimonial-author">
-                        <div class="author-img">YM</div>
-                        <div class="author-info">
-                            <h4>Yakubu Musa</h4>
-                            <p>Young Farmer, Potiskum</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"I used to spend days traveling between markets looking for quality cattle at fair prices. Now I can browse listings from across the region, compare prices, and contact sellers directly. I recently purchased 10 cows without paying any commission fees."</p>
-                    <div class="testimonial-author">
-                        <div class="author-img">AI</div>
-                        <div class="author-info">
-                            <h4>Amina Ibrahim</h4>
-                            <p>Restaurant Owner, Damaturu</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"As a respected dillali who believes in fair trade, I've joined LivestockLink as a verified agent. I now offer my expertise to new sellers while charging transparent, reasonable fees. This platform is transforming our industry for the better."</p>
-                    <div class="testimonial-author">
-                        <div class="author-img">MM</div>
-                        <div class="author-info">
-                            <h4>Musa Mohammed</h4>
-                            <p>Ethical Livestock Agent, Nguru</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="cta">
-        <div class="container">
-            <h2>Ready to Transform Livestock Trading?</h2>
-            <p>Join thousands of farmers, youth, and buyers creating a fair and transparent marketplace across northern Nigeria.</p>
-            <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px;">
-                <a href="seller-dashboard.html" class="btn">Sign Up as Seller</a>
-                <a href="buyer-dashboard.html" class="btn">Sign Up as Buyer</a>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>LivestockLink</h3>
-                    <p>A digital marketplace designed for the direct, transparent, and fair trading of livestock and related commodities.</p>
-                    <p>Empowering youth, novice traders, and local farmers across northern Nigeria.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <a href="#features">Features</a>
-                    <a href="#how-it-works">How It Works</a>
-                    <a href="#marketplace">Marketplace</a>
-                    <a href="#testimonials">Success Stories</a>
-                </div>
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <a href="#">Safety Guidelines</a>
-                    <a href="#">Pricing Guide</a>
-                    <a href
+                    
